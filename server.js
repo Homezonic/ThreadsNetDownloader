@@ -56,20 +56,7 @@ app.post('/search', async (req, res) => {
 // Function to get the video URL using puppeteer
 async function getVideoUrl(url) {
     // Launch a headless Chrome browser
-    const browser = await puppeteer.launch(
-        {
-        args: [
-            "--disable-setuid-sandbox",
-            "--no-sandbox",
-            "--single-process",
-            "--no-zygote",
-        ],
-        executablePath:
-            process.env.NODE_ENV === "production"
-                ? process.env.PUPPETEER_EXECUTABLE_PATH
-                : puppeteer.executablePath(),
-    }
-    );
+    const browser = await puppeteer.launch();
 
     // Open a new browser page
     const page = await browser.newPage();

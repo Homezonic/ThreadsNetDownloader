@@ -13,18 +13,6 @@ app.use(bodyParser.json());
 
 // Define the endpoint to handle the search request
 app.post('/search', async (req, res) => {
-    const browser = await puppeteer.launch({
-        args: [
-            "--disable-setuid-sandbox",
-            "--no-sandbox",
-            "--single-process",
-            "--no-zygote",
-        ],
-        executablePath:
-            process.env.NODE_ENV === "production"
-                ? process.env.PUPPETEER_EXECUTABLE_PATH
-                : puppeteer.executablePath(),
-    });
     try {
         const { url } = req.body;
 
@@ -68,7 +56,20 @@ app.post('/search', async (req, res) => {
 // Function to get the video URL using puppeteer
 async function getVideoUrl(url) {
     // Launch a headless Chrome browser
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch(
+        {
+        args: [
+            "--disable-setuid-sandbox",
+            "--no-sandbox",
+            "--single-process",
+            "--no-zygote",
+        ],
+        executablePath:
+            process.env.NODE_ENV === "production"
+                ? process.env.PUPPETEER_EXECUTABLE_PATH
+                : puppeteer.executablePath(),
+    }
+    );
 
     // Open a new browser page
     const page = await browser.newPage();

@@ -13,7 +13,6 @@ app.use(bodyParser.json());
 
 // Define the endpoint to handle the search request
 app.post('/search', async (req, res) => {
-    );
     try {
         const { url } = req.body;
 
